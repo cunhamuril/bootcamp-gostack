@@ -1,29 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import "./App.css";
-import backgroundImage from "./assets/background.jpeg";
+import api from "./services/api";
 
 import Header from "./components/Header";
 
-function App() {
-  const [projects, setProjects] = useState([
-    "Desenvolvimento de app",
-    "Front-end web",
-  ]);
+import "./App.css";
 
-  function handleAddProject() {
-    setProjects([...projects, `Novo projeto ${Date.now()}`]);
+function App() {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    api.get("projects").then((response) => {
+      setProjects(response.data);
+    });
+  }, []);
+
+  async function handleAddProject() {
+    const response = await api.post("projects", {
+      title: `Novo projeto ${Date.now()}`,
+      owner: "Murilo Cunha",
+    });
+
+    const project = response.data;
+
+    setProjects([...projects, project]);
   }
 
   return (
     <>
       <Header title="Projects" />
 
-      <img width={300} src={backgroundImage} alt="background" />
-
       <ul>
         {projects.map((project) => (
-          <li key={project}>{project}</li>
+          <li key={project.id}>{project.title}</li>
         ))}
       </ul>
 
