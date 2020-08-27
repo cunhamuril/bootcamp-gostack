@@ -2,6 +2,8 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 
+import authConfig from '../config/auth';
+
 import User from '../models/User';
 
 interface Request {
@@ -30,11 +32,11 @@ class AuthenticateUserService {
       throw new Error('Incorrect email/password combination.');
     }
 
-    // 19ac7d307d0e3ce9e6a526dc6e511ea1 => gerado com md5 online
+    const { secret, expiresIn } = authConfig.jwt;
 
-    const token = sign({}, '19ac7d307d0e3ce9e6a526dc6e511ea1', {
+    const token = sign({}, secret, {
       subject: user.id,
-      expiresIn: '1d',
+      expiresIn,
     });
 
     return {
