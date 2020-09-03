@@ -4,8 +4,8 @@ import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
 import { getValidationErrors } from '../../utils';
-import schema from './schema';
 import { IFormData } from './interfaces';
+import schema from './schema';
 
 import logoImg from '../../assets/logo.svg';
 
