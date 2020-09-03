@@ -1,10 +1,11 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useContext } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 
+import { AuthContext } from '../../context/AuthContext';
 import { getValidationErrors } from '../../utils';
-import { IFormData } from './interfaces';
+import { ISignInFormData } from './interfaces';
 import schema from './schema';
 
 import logoImg from '../../assets/logo.svg';
@@ -16,19 +17,33 @@ import { Container, Content, Background } from './styles';
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: IFormData) => {
-    try {
-      formRef.current?.setErrors({});
+  const { user, signIn } = useContext(AuthContext);
 
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      const errors = getValidationErrors(err);
+  console.log(user);
 
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+  const handleSubmit = useCallback(
+    async (data: ISignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
+
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+
+        const { email, password } = data;
+
+        signIn({
+          email,
+          password,
+        });
+      } catch (err) {
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [signIn],
+  );
 
   return (
     <Container>

@@ -28,7 +28,7 @@ export const Content = styled.div`
     }
 
     a {
-      display: block;
+      display: inline-block;
       margin-top: 24px;
 
       color: #f4ede8;

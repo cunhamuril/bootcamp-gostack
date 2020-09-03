@@ -1,4 +1,4 @@
-export interface IFormData {
+export interface ISignInFormData {
   email: string;
   password: string;
 }
