@@ -2,6 +2,7 @@ import React, { useRef, useCallback } from 'react';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
+import { ValidationError } from 'yup';
 
 import { useAuth } from '../../hooks/AuthContext';
 import { getValidationErrors } from '../../utils';
@@ -35,9 +36,13 @@ const SignIn: React.FC = () => {
           password,
         });
       } catch (err) {
-        const errors = getValidationErrors(err);
+        if (err instanceof ValidationError) {
+          const errors = getValidationErrors(err);
 
-        formRef.current?.setErrors(errors);
+          formRef.current?.setErrors(errors);
+        }
+
+        // disparar um toast
       }
     },
     [signIn],
