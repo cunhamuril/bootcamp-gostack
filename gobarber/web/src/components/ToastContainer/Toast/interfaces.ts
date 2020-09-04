@@ -4,4 +4,5 @@ export interface IToastProps {
   type?: 'info' | 'success' | 'error';
   hasDescription: boolean;
   message: IToastMessage;
+  style: object;
 }

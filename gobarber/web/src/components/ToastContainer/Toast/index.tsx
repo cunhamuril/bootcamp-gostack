@@ -17,7 +17,10 @@ const icons = {
   success: <FiCheckCircle size={24} />,
 };
 
-const Toast: React.FC<IToastProps> = ({ message, hasDescription }) => {
+const Toast: React.FC<Omit<IToastProps, 'hasDescription'>> = ({
+  message,
+  style,
+}) => {
   const { removeToast } = useToast();
 
   useEffect(() => {
@@ -31,12 +34,16 @@ const Toast: React.FC<IToastProps> = ({ message, hasDescription }) => {
   }, [removeToast, message.id]);
 
   return (
-    <Container type={message.type} hasDescription={hasDescription}>
+    <Container
+      type={message.type}
+      hasDescription={!!message.description}
+      style={style}
+    >
       {icons[message.type || 'info']}
 
       <div>
         <strong>{message.title}</strong>
-        {hasDescription && <p>{message.description}</p>}
+        {!!message.description && <p>{message.description}</p>}
       </div>
 
       <button type="button" onClick={() => removeToast(message.id)}>
