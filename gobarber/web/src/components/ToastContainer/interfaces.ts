@@ -1,4 +1,5 @@
-export interface IToastProps {
-  type?: 'info' | 'success' | 'error';
-  hasDescription: boolean;
+import { IToastMessage } from '../../hooks/toast/interfaces';
+
+export interface IToastContainerProps {
+  messages: IToastMessage[];
 }
