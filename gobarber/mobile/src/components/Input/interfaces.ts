@@ -4,3 +4,7 @@ export interface IInputProps extends TextInputProps {
   name: string;
   icon: string;
 }
+
+export interface IInputValueReference {
+  value: string;
+}
