@@ -14,6 +14,7 @@ import {
   Alert,
 } from 'react-native';
 
+import { api } from '../../services';
 import { getValidationErrors } from '../../utils';
 import logoImg from '../../assets/logo.png';
 import { IFormData } from './interfaces';
@@ -42,7 +43,14 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
 
-      // await api.post('/users', data);
+      await api.post('/users', data);
+
+      Alert.alert(
+        'Cadastro realizado com sucesso!',
+        'Você já pode fazer login na aplicação.',
+      );
+
+      navigation.goBack();
     } catch (err) {
       if (err instanceof ValidationError) {
         const errors = getValidationErrors(err);
