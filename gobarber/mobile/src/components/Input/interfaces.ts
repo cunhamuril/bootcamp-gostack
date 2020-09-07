@@ -12,3 +12,7 @@ export interface IInputValueReference {
 export interface IInputRef {
   focus(): void;
 }
+
+export interface IContainerProps {
+  isFocused: boolean;
+}
