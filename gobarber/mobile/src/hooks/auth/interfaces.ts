@@ -5,6 +5,7 @@ interface ISignInCredentials {
 
 export interface IAuthContextData {
   user: object;
+  loading: boolean;
   signIn(data: ISignInCredentials): Promise<void>;
   signOut(): void;
 }
