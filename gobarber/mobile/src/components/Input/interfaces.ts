@@ -15,4 +15,5 @@ export interface IInputRef {
 
 export interface IContainerProps {
   isFocused: boolean;
+  isErrored: boolean;
 }

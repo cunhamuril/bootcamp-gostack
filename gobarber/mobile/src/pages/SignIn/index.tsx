@@ -3,6 +3,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
+import { ValidationError } from 'yup';
 import {
   Image,
   View,
@@ -10,9 +11,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   TextInput,
+  Alert,
 } from 'react-native';
 
 import logoImg from '../../assets/logo.png';
+import { getValidationErrors } from '../../utils';
+import { ISignInFormData } from './interfaces';
+import schema from './schema';
 
 import { Button, Input } from '../../components';
 
@@ -30,8 +35,32 @@ const SignIn: React.FC = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const navigation = useNavigation();
 
-  const handleSignIn = useCallback((data: object) => {
-    console.log(data);
+  const handleSignIn = useCallback(async (data: ISignInFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      const { email, password } = data;
+
+      // await signIn({
+      //   email,
+      //   password,
+      // });
+    } catch (err) {
+      if (err instanceof ValidationError) {
+        const errors = getValidationErrors(err);
+
+        formRef.current?.setErrors(errors);
+      } else {
+        Alert.alert(
+          'Erro na autenticação',
+          'Ocorreu um erro ao fazer login, cheque as credenciais',
+        );
+      }
+    }
   }, []);
 
   return (
