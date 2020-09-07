@@ -1,15 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useImperativeHandle,
+  forwardRef,
+} from 'react';
 import { useField } from '@unform/core';
 
-import { IInputProps, IInputValueReference } from './interfaces';
+import { IInputProps, IInputValueReference, IInputRef } from './interfaces';
 
 import { Container, TextInput, Icon } from './styles';
 
-const Input: React.FC<IInputProps> = ({ name, icon, ...props }) => {
+const Input: React.RefForwardingComponent<IInputRef, IInputProps> = (
+  { name, icon, ...props },
+  ref,
+) => {
   const inputElementRef = useRef<any>(null);
 
   const { registerField, defaultValue, fieldName, error } = useField(name);
   const inputValueRef = useRef<IInputValueReference>({ value: defaultValue });
+
+  useImperativeHandle(ref, () => ({
+    focus() {
+      inputElementRef.current.focus();
+    },
+  }));
 
   useEffect(() => {
     registerField<string>({
@@ -45,4 +59,4 @@ const Input: React.FC<IInputProps> = ({ name, icon, ...props }) => {
   );
 };
 
-export default Input;
+export default forwardRef(Input);

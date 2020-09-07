@@ -8,3 +8,7 @@ export interface IInputProps extends TextInputProps {
 export interface IInputValueReference {
   value: string;
 }
+
+export interface IInputRef {
+  focus(): void;
+}
