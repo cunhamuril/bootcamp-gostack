@@ -14,6 +14,7 @@ import {
   Alert,
 } from 'react-native';
 
+import { useAuth } from '../../hooks/auth';
 import logoImg from '../../assets/logo.png';
 import { getValidationErrors } from '../../utils';
 import { ISignInFormData } from './interfaces';
@@ -35,6 +36,10 @@ const SignIn: React.FC = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const navigation = useNavigation();
 
+  const { signIn, user } = useAuth();
+
+  console.log(user);
+
   const handleSignIn = useCallback(async (data: ISignInFormData) => {
     try {
       formRef.current?.setErrors({});
@@ -45,10 +50,10 @@ const SignIn: React.FC = () => {
 
       const { email, password } = data;
 
-      // await signIn({
-      //   email,
-      //   password,
-      // });
+      await signIn({
+        email,
+        password,
+      });
     } catch (err) {
       if (err instanceof ValidationError) {
         const errors = getValidationErrors(err);
