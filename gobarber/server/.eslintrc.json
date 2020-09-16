@@ -20,6 +20,20 @@
   },
   "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
+    "prettier/prettier": "error",
+    "class-methods-use-this": "off",
+    "camelcase": "off",
+    "@typescript-eslint/naming-convention": [
+      "error",
+      {
+        "selector": "interface",
+        "format": ["PascalCase"],
+        "custom": {
+          "regex": "^I[A-Z]",
+          "match": true
+        }
+      }
+    ],
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -27,9 +41,6 @@
         "ts": "never"
       }
     ],
-    "prettier/prettier": "error",
-    "class-methods-use-this": "off",
-    "camelcase": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       {
