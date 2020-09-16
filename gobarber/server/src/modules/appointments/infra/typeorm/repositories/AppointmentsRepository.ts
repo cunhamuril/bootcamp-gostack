@@ -1,5 +1,7 @@
 import { getRepository, Repository } from 'typeorm';
 
+import AppError from '@shared/errors/AppError';
+
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO';
 
@@ -10,6 +12,16 @@ class AppointmentsRepository implements IAppointmentsRepository {
 
   constructor() {
     this.ormRepository = getRepository(Appointment);
+  }
+
+  public async find(): Promise<Appointment[]> {
+    const appointments = await this.ormRepository.find();
+
+    if (appointments.length === 0) {
+      throw new AppError('No appointments founded', 404);
+    }
+
+    return appointments;
   }
 
   public async findByDate(date: Date): Promise<Appointment | undefined> {
