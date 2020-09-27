@@ -8,7 +8,7 @@ class UserTokensRepository implements IUserTokensRepository {
   private ormRepository: Repository<UserToken>;
 
   constructor() {
-    this.ormRepository = getRepository(User);
+    this.ormRepository = getRepository(UserToken);
   }
 
   public async findByToken(token: string): Promise<UserToken | undefined> {
