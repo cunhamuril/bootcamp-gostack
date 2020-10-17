@@ -10,10 +10,10 @@ import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const usersRouter = Router();
 const upload = multer(uploadConfig);
-const usersControler = new UsersController();
+const usersController = new UsersController();
 const userAvatarController = new UserAvatarController();
 
-usersRouter.post('/', usersControler.create);
+usersRouter.post('/', usersController.create);
 
 usersRouter.patch(
   '/avatar',
