@@ -1,15 +1,14 @@
 import React, { useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
+import { FiLogIn, FiMail } from 'react-icons/fi';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/web';
 import { ValidationError } from 'yup';
 
-import { useAuth } from '../../hooks/auth';
 import { useToast } from '../../hooks/toast';
 
 import { getValidationErrors } from '../../utils';
-import { ISignInFormData } from './interfaces';
+import { IForgotPasswordFormData } from './interfaces';
 import schema from './schema';
 
 import logoImg from '../../assets/logo.svg';
@@ -18,14 +17,13 @@ import { Button, Input } from '../../components';
 
 import { Container, AnimationContainer, Content, Background } from './styles';
 
-const SignIn: React.FC = () => {
+const ForgotPassword: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { signIn } = useAuth();
   const { addToast } = useToast();
 
   const handleSubmit = useCallback(
-    async (data: ISignInFormData) => {
+    async (data: IForgotPasswordFormData) => {
       try {
         formRef.current?.setErrors({});
 
@@ -33,12 +31,7 @@ const SignIn: React.FC = () => {
           abortEarly: false,
         });
 
-        const { email, password } = data;
-
-        await signIn({
-          email,
-          password,
-        });
+        // recuperação de senha
       } catch (err) {
         if (err instanceof ValidationError) {
           const errors = getValidationErrors(err);
@@ -48,12 +41,13 @@ const SignIn: React.FC = () => {
 
         addToast({
           type: 'error',
-          title: 'Erro na autenticação',
-          description: 'Ocorreu um erro ao fazer login, cheque as credenciais',
+          title: 'Erro na recuperação de senha',
+          description:
+            'Ocorreu um erro ao tentar realizar a recuperação de senha, tente novamente.',
         });
       }
     },
-    [signIn, addToast],
+    [addToast],
   );
 
   return (
@@ -63,7 +57,7 @@ const SignIn: React.FC = () => {
           <img src={logoImg} alt="GoBarber" />
 
           <Form ref={formRef} onSubmit={handleSubmit}>
-            <h1>Faça seu logon</h1>
+            <h1>Recuperar senha</h1>
 
             <Input
               name="email"
@@ -72,21 +66,12 @@ const SignIn: React.FC = () => {
               placeholder="E-mail"
             />
 
-            <Input
-              name="password"
-              type="password"
-              icon={FiLock}
-              placeholder="Senha"
-            />
-
-            <Button type="submit">Entrar</Button>
-
-            <Link to="/forgot-password">Esqueci minha senha</Link>
+            <Button type="submit">Recuperar</Button>
           </Form>
 
-          <Link to="/signup">
+          <Link to="/">
             <FiLogIn />
-            Criar conta
+            Voltar ao login
           </Link>
         </AnimationContainer>
       </Content>
@@ -96,4 +81,4 @@ const SignIn: React.FC = () => {
   );
 };
 
-export default SignIn;
+export default ForgotPassword;
