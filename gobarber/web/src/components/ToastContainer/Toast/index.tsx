@@ -36,7 +36,7 @@ const Toast: React.FC<Omit<IToastProps, 'hasDescription'>> = ({
   return (
     <Container
       type={message.type}
-      hasDescription={!!message.description}
+      hasDescription={Number(message.description)}
       style={style}
     >
       {icons[message.type || 'info']}
