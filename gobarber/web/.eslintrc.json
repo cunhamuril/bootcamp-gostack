@@ -33,6 +33,7 @@
     "no-unused-expressions": "off",
     "@typescript-eslint/ban-types": "warn",
     "camelcase": "off",
+    "react/jsx-one-expression-per-line": "off",
     "object-curly-newline": [
       "warn",
       {
