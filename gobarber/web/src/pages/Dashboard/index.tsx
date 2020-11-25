@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FiClock, FiPower } from 'react-icons/fi';
 
 import logoImg from '../../assets/logo.svg';
@@ -12,10 +12,14 @@ import {
   Content,
   Schedule,
   NextAppointment,
+  Section,
+  Appointment,
   Calendar,
 } from './styles';
 
 const Dashboard: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
   const { signOut, user } = useAuth();
 
   return (
@@ -44,8 +48,8 @@ const Dashboard: React.FC = () => {
           <h1>Horários agendados</h1>
           <p>
             <span>Hoje</span>
-            <span>Dia 06</span>
-            <span>Segunda-feira</span>
+            <span>Dia 24</span>
+            <span>Terça-feira</span>
           </p>
 
           <NextAppointment>
@@ -53,12 +57,56 @@ const Dashboard: React.FC = () => {
             <div>
               <img src={user.avatar_url} alt={user.name} />
 
-              <strong>Silvio Santos</strong>
+              <strong>{user.name}</strong>
               <span>
                 <FiClock /> 08:00
               </span>
             </div>
           </NextAppointment>
+
+          <Section>
+            <strong>Manhã</strong>
+
+            <Appointment>
+              <span>
+                <FiClock /> 08:00
+              </span>
+
+              <div>
+                <img src={user.avatar_url} alt={user.name} />
+
+                <strong>{user.name}</strong>
+              </div>
+            </Appointment>
+
+            <Appointment>
+              <span>
+                <FiClock /> 08:00
+              </span>
+
+              <div>
+                <img src={user.avatar_url} alt={user.name} />
+
+                <strong>{user.name}</strong>
+              </div>
+            </Appointment>
+          </Section>
+
+          <Section>
+            <strong>Tarde</strong>
+
+            <Appointment>
+              <span>
+                <FiClock /> 08:00
+              </span>
+
+              <div>
+                <img src={user.avatar_url} alt={user.name} />
+
+                <strong>{user.name}</strong>
+              </div>
+            </Appointment>
+          </Section>
         </Schedule>
 
         <Calendar />
