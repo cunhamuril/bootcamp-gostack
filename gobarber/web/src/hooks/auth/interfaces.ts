@@ -3,7 +3,7 @@ interface ISignInCredentials {
   password: string;
 }
 
-interface IUser {
+export interface IUser {
   id: string;
   name: string;
   email: string;
@@ -13,6 +13,7 @@ export interface IAuthContextData {
   user: IUser;
   signIn(data: ISignInCredentials): Promise<void>;
   signOut(): void;
+  updateUser(data: IUser): void;
 }
 
 export interface IAuthState {

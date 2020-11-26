@@ -2,7 +2,7 @@ import React, { createContext, useCallback, useState, useContext } from 'react';
 
 import { api } from '../../services';
 
-import { IAuthContextData, IAuthState } from './interfaces';
+import { IAuthContextData, IAuthState, IUser } from './interfaces';
 
 const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
@@ -43,8 +43,22 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({} as IAuthState);
   }, []);
 
+  const updateUser = useCallback(
+    (user: IUser) => {
+      localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+
+      setData({
+        token: data.token,
+        user,
+      });
+    },
+    [setData, data.token],
+  );
+
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ user: data.user, signIn, signOut, updateUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
