@@ -81,6 +81,12 @@ export const Schedule = styled.div`
     font-size: 36px;
   }
 
+  h2 {
+    margin-top: 32px;
+
+    color: #999591;
+  }
+
   p {
     display: flex;
     align-items: center;
@@ -187,6 +193,10 @@ export const Section = styled.section`
     color: #999591;
     border-bottom: 1px solid #3e3b47;
   }
+
+  > p {
+    color: #999591;
+  }
 `;
 
 export const Appointment = styled.div`
@@ -202,6 +212,8 @@ export const Appointment = styled.div`
     align-items: center;
 
     margin-left: auto;
+
+    width: 70px;
 
     color: #f4ede8;
 
