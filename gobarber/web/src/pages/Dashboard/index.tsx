@@ -5,6 +5,7 @@ import { FiClock, FiPower } from 'react-icons/fi';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import { isToday, format, parseISO, isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
+import { Link } from 'react-router-dom';
 
 import { api } from '../../services';
 import logoImg from '../../assets/logo.svg';
@@ -48,7 +49,7 @@ const Dashboard: React.FC = () => {
       .then((response) => {
         setMonthAvailability(response.data);
       })
-      .catch((err) => console.error(err.data || err));
+      .catch((err) => console.error(err.data || err)); // eslint-disable-line
   }, [currentMonth, user.id]);
 
   useEffect(() => {
@@ -68,7 +69,7 @@ const Dashboard: React.FC = () => {
 
         setAppointments(appointmentsFormatted);
       })
-      .catch((err) => console.error(err.data || err));
+      .catch((err) => console.error(err.data || err)); // eslint-disable-line
   }, [selectedDate]);
 
   const handleDateChange = useCallback((day: Date, modifiers: DayModifiers) => {
@@ -142,7 +143,9 @@ const Dashboard: React.FC = () => {
 
             <div>
               <span>Bem-vindo, </span>
-              <strong>{user.name}</strong>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </Profile>
 
