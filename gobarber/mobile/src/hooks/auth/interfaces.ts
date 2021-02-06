@@ -3,8 +3,14 @@ interface ISignInCredentials {
   password: string;
 }
 
+interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  avatar_url: string;
+}
 export interface IAuthContextData {
-  user: object;
+  user: IUser;
   loading: boolean;
   signIn(data: ISignInCredentials): Promise<void>;
   signOut(): void;
@@ -12,5 +18,5 @@ export interface IAuthContextData {
 
 export interface IAuthState {
   token: string;
-  user: object;
+  user: IUser;
 }
