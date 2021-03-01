@@ -43,6 +43,7 @@ const Input: React.FC<IInputProps> = ({ name, icon: Icon, ...props }) => {
         defaultValue={defaultValue}
         type="text"
         ref={inputRef}
+        data-testid={name}
         {...props}
       />
 
